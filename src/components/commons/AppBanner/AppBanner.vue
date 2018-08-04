@@ -1,9 +1,9 @@
 <template>
-  <div :id='swiperData.id' class="swiper-container">
+  <div :id='swiperData.id' class="swiper-container" >
     <div class="swiper-wrapper swipe-wrap">
-      <div class="swiper-slide" :style="{'height': swiperData.height}" v-for="item in BannerData" :key="item.linkId">
-        <a :href="item.linkId | filterA">
-          <img :style="{'height': swiperData.height}" :src="item.imgUrl" alt="">
+      <div class="swiper-slide" v-for="item in BannerData" :key="item.linkId" :style="{'height': swiperData.height}">
+        <a :href="item.linkId | filterA" >
+          <img :style="{'height': swiperData.height}" :src="item.imgUrl">
         </a>
       </div>
     </div>
@@ -21,25 +21,33 @@ export default {
     }
   },
   updated () {
+    // if (this.BannerData) { console.log(111) }
     let swiperid = '#' + this.swiperData.id
     // eslint-disable-next-line
-    new Swiper(swiperid, {
+    let swipers = new Swiper(swiperid, {
       pagination: {
         el: '.swiper-pagination'
       },
-      loop: true,
-      autoplay: {
+      loop: this.swiperData.loop || true,
+      autoplay: this.swiperData.autoplay || {
         delay: this.swiperData.delay || 3000,
         disableOnInteraction: false
       },
-      cancelable: false
+      observeParents: true
     })
   }
 }
 </script>
 <style lang="scss">
   .swiper-container {
-    width: 100%;
+    a{
+      display: inline-block;
+      height: 100%;
+      width: 100%;
+      img{
+        width: 100%;
+      }
+    }
     .appbanner{
       .swiper-pagination-bullet{
         background: #fff;
@@ -47,16 +55,6 @@ export default {
       }
       .swiper-pagination-bullet-active{
         background: rgb(234,85,20);
-      }
-    }
-    .swipe-wrap {
-      width: 100%;
-      a {
-        display: block;
-        width: 100%;
-        img {
-          width: 100%;
-        }
       }
     }
   }

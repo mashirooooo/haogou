@@ -1,9 +1,10 @@
 <template>
-  <div id="app-quick-enter" v-if = 'QuickEnterData'>
+  <div id="app-quick-enter">
     <div class="quickEnter-container" >
       <a v-for="item in QuickEnterData" :key="item.linkId" :href="item.linkId | filterA">
         <span>
           <img width='45' height='45' :src="item.imgUrl" alt="">
+          <span>{{item.linkTitle}}</span>
         </span>
       </a>
     </div>
@@ -22,7 +23,6 @@ export default {
 </script>
 <style lang="scss" scoped>
   #app-quick-enter {
-    background: #000;
     width: 100%;
     height: 1.76rem;
     background: url(/static/bgQuickEnter.jpg) no-repeat center center;
@@ -35,18 +35,29 @@ export default {
       a{
         display: flex;
         width: 0.75rem;
+        height: 0.78rem;
         justify-content: center;
         flex-wrap: wrap;
         padding-bottom: 0.1rem;
         position: relative;
         img {
           background: rgba($color: #ffffff, $alpha: 0);
-          margin: 0 0.15rem 0.04rem 0.15rem
+          margin: 0 0.15rem 0.04rem 0.15rem;
         }
         >span{
           display: flex;
           flex-wrap: wrap;
           padding: 0.08rem 0;
+          justify-content: center;
+          span{
+            color: white;
+            display: block;
+            width: 100%;
+            height: 0.13rem;
+            line-height: 0.13rem;
+            font-size: 0.13rem;
+            text-align: center
+          }
         }
       }
     }

@@ -4,11 +4,14 @@
     <app-banner :swiperData='Banner' :BannerDatas = "homeData.BannerDatas"></app-banner>
     <app-quick-enter :QuickEnter = 'homeData.QuickEnter'></app-quick-enter>
     <app-banner :swiperData='adBanner' :BannerDatas = "homeData.adBannerDatas"></app-banner>
+    <app-title-top title="今日直播">
+    </app-title-top>
   </div>
 </template>
 <script>
 import AppTop from './AppTop/AppTop'
-import AppBanner from './AppBanner/AppBanner'
+import AppBanner from '../../commons/AppBanner/AppBanner'
+import AppTitleTop from '../../commons/AppTitleTop/AppTitleTop'
 // eslint-disable-next-line
 import {mapActions, mapState,mapGetters} from 'vuex'
 import AppQuickEnter from './AppQuickEnter/AppQuickEnter'
@@ -31,7 +34,8 @@ export default {
   components: {
     AppTop,
     AppBanner,
-    AppQuickEnter
+    AppQuickEnter,
+    AppTitleTop
   },
   methods: {
     ...mapActions(['getChangeHomeData'])
@@ -66,5 +70,6 @@ export default {
 <style lang="scss">
     body {
     background: #f3f5f7;
+    font-size: 0.15rem;
   }
 </style>
