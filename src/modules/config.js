@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Axios from 'axios'
+import './filter'
 // swiper css
 import 'swiper/dist/css/swiper.min.css'
 

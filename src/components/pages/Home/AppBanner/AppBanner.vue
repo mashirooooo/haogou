@@ -1,58 +1,63 @@
 <template>
-  <div @click="get" id="app-banner" class="swiper-container swiper-container-horizontal">
+  <div :id='swiperData.id' class="swiper-container">
     <div class="swiper-wrapper swipe-wrap">
-      <div class="swiper-slide">
-        <a>
-          <img src=" alt=">
+      <div class="swiper-slide" :style="{'height': swiperData.height}" v-for="item in BannerData" :key="item.linkId">
+        <a :href="item.linkId | filterA">
+          <img :style="{'height': swiperData.height}" :src="item.imgUrl" alt="">
         </a>
       </div>
     </div>
-    <div class="swiper-pagination"></div>
+    <div class="swiper-pagination appbanner"></div>
   </div>
 </template>
 <script>
+import Swiper from 'swiper'
 export default {
   name: 'AppBanner',
-  data () {
-    return {
-      BannerListData: [
-        {
-          imgUrl:
-            'https://image.hao24.com/images_site/mob/appIndex/2018/08/1533117066609_720x275.jpg',
-          linkId: '6376',
-          linkTitle: '秒杀倒计时',
-          remark: '',
-          templateType: 20
-        },
-        {
-          imgUrl:
-            'https://image.hao24.com/images_site/mob/appIndex/2018/07/1532934984847_720x275.jpg',
-          linkId: 'https://m.hao24.com/ticket-6370-1.html',
-          linkTitle: '开扒好货 领券先抢',
-          remark: '',
-          templateType: 40
-        }
-      ],
-      num: 1
+  props: ['BannerDatas', 'swiperData'],
+  computed: {
+    BannerData () {
+      return this.BannerDatas && this.BannerDatas.data ? JSON.parse(this.BannerDatas.data) : 1
     }
   },
-  methods: {
-    get () {
-      console.log(this.BannerListDatas, this.num, this.BannerListData)
-    }
+  updated () {
+    let swiperid = '#' + this.swiperData.id
+    // eslint-disable-next-line
+    new Swiper(swiperid, {
+      pagination: {
+        el: '.swiper-pagination'
+      },
+      loop: true,
+      autoplay: {
+        delay: this.swiperData.delay || 3000,
+        disableOnInteraction: false
+      },
+      cancelable: false
+    })
   }
-  // props: {
-  //   BannerListDatas: {
-  //     type: Array,
-  //     required: true
-  //   }
-  // }
 }
 </script>
-<style lang='scss'>
-  #app-banner {
-    height: 10rem;
+<style lang="scss">
+  .swiper-container {
     width: 100%;
-    background: red;
+    .appbanner{
+      .swiper-pagination-bullet{
+        background: #fff;
+        opacity: 1;
+      }
+      .swiper-pagination-bullet-active{
+        background: rgb(234,85,20);
+      }
+    }
+    .swipe-wrap {
+      width: 100%;
+      a {
+        display: block;
+        width: 100%;
+        img {
+          width: 100%;
+        }
+      }
+    }
   }
 </style>
