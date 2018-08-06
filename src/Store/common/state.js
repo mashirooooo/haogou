@@ -1,5 +1,5 @@
 const state = {
   homeData: {},
-  navId: 110
+  navId: '110'
 }
 export default state

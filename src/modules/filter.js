@@ -7,3 +7,6 @@ Vue.filter('filterA', (val) => {
     return 'https://m.hao24.com/event/' + val + '.html'
   }
 })
+Vue.filter('filtergoodsA', (val) => {
+  return 'https://m.hao24.com/goods/' + val + '.html'
+})

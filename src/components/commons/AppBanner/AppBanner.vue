@@ -24,7 +24,7 @@ export default {
     // if (this.BannerData) { console.log(111) }
     let swiperid = '#' + this.swiperData.id
     // eslint-disable-next-line
-    let swipers = new Swiper(swiperid, {
+    new Swiper(swiperid, {
       pagination: {
         el: '.swiper-pagination'
       },
