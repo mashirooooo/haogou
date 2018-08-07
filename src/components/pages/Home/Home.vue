@@ -1,34 +1,54 @@
 <template>
   <div class="page">
-    <app-top></app-top>
-    <app-banner :swiperData='Banner' :BannerDatas = "homeData.BannerDatas || {}"></app-banner>
-    <app-quick-enter :QuickEnter = 'homeData.QuickEnter'></app-quick-enter>
-    <app-banner :swiperData='adBanner' :BannerDatas = "homeData.adBannerDatas || {}"></app-banner>
-    <app-broad-cast :BroadCasts='homeData.BroadCasts || {}' >
-      <div>
-        <app-title-top title="今日直播">
-          <ul>
-              <li class="">江苏<em>|</em></li>
-              <li class="oncolor">全国</li>
-          </ul>
-        </app-title-top>
-      </div>
-    </app-broad-cast>
+    <mt-navbar v-model="navId" fixed >
+      <mt-tab-item id="110" @click.native="changeDataByNavId">首页</mt-tab-item>
+      <mt-tab-item id="111">直播</mt-tab-item>
+      <mt-tab-item id="112">健康</mt-tab-item>
+      <mt-tab-item id="113">家居电器</mt-tab-item>
+      <mt-tab-item id="114">美妆服饰</mt-tab-item>
+    </mt-navbar>
+    <!-- tab-container -->
+    <mt-tab-container v-model="navId">
+    <mt-spinner type="triple-bounce" v-show="!show" color= 'gray' :size='40'></mt-spinner>
+      <mt-tab-container-item id="110" v-show="show">
+        <div>
+          <!-- <app-top></app-top> -->
+          <app-banner :swiperData='Banner' :BannerDatas = "homeData.BannerDatas || {}"></app-banner>
+          <app-quick-enter :QuickEnter = 'homeData.QuickEnter'></app-quick-enter>
+          <app-banner :swiperData='adBanner' :BannerDatas = "homeData.adBannerDatas || {}"></app-banner>
+          <app-broad-cast :BroadCasts='homeData.BroadCasts || {}' >
+          </app-broad-cast>
+        </div>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="2">
+      </mt-tab-container-item>
+      <mt-tab-container-item id="3">
+      </mt-tab-container-item>
+      <mt-tab-container-item id="4">
+      </mt-tab-container-item>
+      <mt-tab-container-item id="5">
+      </mt-tab-container-item>
+    </mt-tab-container>
   </div>
 </template>
 <script>
-import AppTop from './AppTop/AppTop'
+
+// import AppTop from './AppTop/AppTop'
 import AppBanner from '../../commons/AppBanner/AppBanner'
-import AppTitleTop from '../../commons/AppTitleTop/AppTitleTop'
 // eslint-disable-next-line
-import {mapActions, mapState,mapGetters} from 'vuex'
+import {mapActions, mapState,mapGetters, mapMutations} from 'vuex'
+
+import {CHANGE_NAVID} from '../../../Store/common/const'
 import AppQuickEnter from './AppQuickEnter/AppQuickEnter'
 import AppBroadCast from './AppBroadCast/AppBroadCast'
+
+import {Indicator} from 'mint-ui'
+
 export default {
   name: 'Home',
   data () {
     return {
-      navId: 110,
+      navId: '110',
       Banner: {
         id: 'Banner',
         height: '1.43rem'
@@ -41,20 +61,25 @@ export default {
     }
   },
   components: {
-    AppTop,
+    // AppTop,
     AppBanner,
     AppQuickEnter,
-    AppTitleTop,
     AppBroadCast
   },
   methods: {
-    ...mapActions(['getChangeHomeData'])
+    ...mapMutations([CHANGE_NAVID]),
+    ...mapActions(['getChangeHomeData']),
+    changeDataByNavId () {
+      this.CHANGE_NAVID({navId: '110'})
+      if (this.navId === this.$store.state.modulecommon.navId) return false
+      this.getChangeHomeData()
+    }
   },
   created () {
     this.getChangeHomeData()
   },
   computed: {
-    ...mapGetters(['homeDatas']),
+    ...mapGetters(['homeDatas', 'show']),
     homeData () {
       if (!this.homeDatas) return false
       let homeDataObj = {}
@@ -82,9 +107,24 @@ export default {
 </script>
 <style lang="scss">
     body {
-    height: 200rem ;
     background: #f3f5f7;
     font-size: 0.15rem;
+    .mint-navbar.is-fixed {
+      z-index: 1000;
+    }
+    .mint-tab-container{
+      margin-top: 0.5rem;
+      .mint-tab-container-wrap{
+        >span:first-child{
+          display: block;
+          width: 100%;
+          padding-top: 0.3rem;
+          .mint-spinner-triple-bounce {
+            text-align: center
+          }
+        }
+      }
+    }
     .ml_title ul {
       float: right;
       margin-right: 3%;

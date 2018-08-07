@@ -25,7 +25,6 @@ export default {
   #app-quick-enter {
     width: 100%;
     height: 1.76rem;
-    background: url(/static/bgQuickEnter.jpg) no-repeat center center;
     .quickEnter-container {
       display: flex;
       width: 100%;
@@ -50,7 +49,6 @@ export default {
           padding: 0.08rem 0;
           justify-content: center;
           span{
-            color: white;
             display: block;
             width: 100%;
             height: 0.13rem;

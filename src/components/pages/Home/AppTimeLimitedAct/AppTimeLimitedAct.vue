@@ -39,10 +39,10 @@ import Swiper from 'swiper'
 import AppTitleTop from '../../../commons/AppTitleTop/AppTitleTop'
 
 export default {
-  name: 'AppBroadCast',
+  name: 'AppTimeLimitedAct',
 
   props: {
-    BroadCasts: {
+    TimeLimitedActDatas: {
       type: Object,
       required: true
     }

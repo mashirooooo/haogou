@@ -9,6 +9,15 @@ import 'swiper/dist/css/swiper.min.css'
 // 全局通用样式
 import '../stylesheets/main.scss'
 
+import 'mint-ui/lib/style.css'
+
+import {
+  Spinner,
+  Navbar,
+  TabItem,
+  TabContainer,
+  TabContainerItem
+} from 'mint-ui'
 // rem
 import computedRem from './rem'
 // 计算rem
@@ -19,3 +28,9 @@ computedRem()
 Vue.config.productionTip = false
 
 Vue.prototype.$http = Axios
+
+Vue.component(TabContainer.name, TabContainer)
+Vue.component(TabContainerItem.name, TabContainerItem)
+Vue.component(Navbar.name, Navbar)
+Vue.component(TabItem.name, TabItem)
+Vue.component(Spinner.name, Spinner)
