@@ -8,7 +8,6 @@ const mutations = {
   },
   [CHANGE_SHOW] (state, payload) {
     state.Show = payload.Show
-    console.log(state.Show)
   }
 }
 export default mutations

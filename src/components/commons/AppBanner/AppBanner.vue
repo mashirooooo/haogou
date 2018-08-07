@@ -20,7 +20,7 @@ export default {
       return this.BannerDatas && this.BannerDatas.data ? JSON.parse(this.BannerDatas.data) : 1
     }
   },
-  updated () {
+  mounted () {
     // if (this.BannerData) { console.log(111) }
     let swiperid = '#' + this.swiperData.id
     // eslint-disable-next-line

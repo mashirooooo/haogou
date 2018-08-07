@@ -2,31 +2,34 @@
   <div class="page">
     <mt-navbar v-model="navId" fixed >
       <mt-tab-item id="110" @click.native="changeDataByNavId">首页</mt-tab-item>
-      <mt-tab-item id="111">直播</mt-tab-item>
-      <mt-tab-item id="112">健康</mt-tab-item>
-      <mt-tab-item id="113">家居电器</mt-tab-item>
-      <mt-tab-item id="114">美妆服饰</mt-tab-item>
+      <mt-tab-item id="111" @click.native="changeDataByNavId">直播</mt-tab-item>
+      <mt-tab-item id="114" @click.native="changeDataByNavId">健康</mt-tab-item>
+      <mt-tab-item id="113" @click.native="changeDataByNavId">家居电器</mt-tab-item>
+      <mt-tab-item id="115" @click.native="changeDataByNavId">美妆服饰</mt-tab-item>
     </mt-navbar>
     <!-- tab-container -->
-    <mt-tab-container v-model="navId">
-    <mt-spinner type="triple-bounce" v-show="!show" color= 'gray' :size='40'></mt-spinner>
-      <mt-tab-container-item id="110" v-show="show">
+    <mt-spinner type="triple-bounce" v-if="!show" color= 'gray' :size='40'></mt-spinner>
+    <mt-tab-container v-model="navId" v-else>
+      <mt-tab-container-item id="110">
         <div>
           <!-- <app-top></app-top> -->
           <app-banner :swiperData='Banner' :BannerDatas = "homeData.BannerDatas || {}"></app-banner>
           <app-quick-enter :QuickEnter = 'homeData.QuickEnter'></app-quick-enter>
           <app-banner :swiperData='adBanner' :BannerDatas = "homeData.adBannerDatas || {}"></app-banner>
-          <app-broad-cast :BroadCasts='homeData.BroadCasts || {}' >
-          </app-broad-cast>
+          <app-broad-cast :BroadCasts='homeData.BroadCasts || {}' ></app-broad-cast>
         </div>
       </mt-tab-container-item>
-      <mt-tab-container-item id="2">
+
+      <mt-tab-container-item id="111">
+        <div>hahah</div>
       </mt-tab-container-item>
-      <mt-tab-container-item id="3">
+
+      <mt-tab-container-item id="114">
+        <div>qewredthgf</div>
       </mt-tab-container-item>
-      <mt-tab-container-item id="4">
+      <mt-tab-container-item id="113">
       </mt-tab-container-item>
-      <mt-tab-container-item id="5">
+      <mt-tab-container-item id="115">
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -41,7 +44,8 @@ import {mapActions, mapState,mapGetters, mapMutations} from 'vuex'
 import {CHANGE_NAVID} from '../../../Store/common/const'
 import AppQuickEnter from './AppQuickEnter/AppQuickEnter'
 import AppBroadCast from './AppBroadCast/AppBroadCast'
-
+import AppBigDiscount from './AppBigDiscount/AppBigDiscount'
+// eslint-disable-next-line
 import {Indicator} from 'mint-ui'
 
 export default {
@@ -70,9 +74,10 @@ export default {
     ...mapMutations([CHANGE_NAVID]),
     ...mapActions(['getChangeHomeData']),
     changeDataByNavId () {
-      this.CHANGE_NAVID({navId: '110'})
       if (this.navId === this.$store.state.modulecommon.navId) return false
+      this.CHANGE_NAVID({navId: this.navId})
       this.getChangeHomeData()
+      console.log(this.navId, 'aaa')
     }
   },
   created () {
@@ -106,24 +111,21 @@ export default {
 }
 </script>
 <style lang="scss">
-    body {
+  .page{
     background: #f3f5f7;
+    height: 100%;
     font-size: 0.15rem;
+    >span {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding-top: .7rem;
+    }
     .mint-navbar.is-fixed {
       z-index: 1000;
     }
     .mint-tab-container{
       margin-top: 0.5rem;
-      .mint-tab-container-wrap{
-        >span:first-child{
-          display: block;
-          width: 100%;
-          padding-top: 0.3rem;
-          .mint-spinner-triple-bounce {
-            text-align: center
-          }
-        }
-      }
     }
     .ml_title ul {
       float: right;

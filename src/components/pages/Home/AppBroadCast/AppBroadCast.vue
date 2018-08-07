@@ -55,7 +55,7 @@ export default {
       return this.BroadCasts && this.BroadCasts.data ? JSON.parse(this.BroadCasts.data).countryList : []
     }
   },
-  updated () {
+  mounted () {
     // eslint-disable-next-line
     new Swiper('.app-broad-cast', {
       autoplay: false,
