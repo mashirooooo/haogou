@@ -16,7 +16,9 @@ import {
   Navbar,
   TabItem,
   TabContainer,
-  TabContainerItem
+  TabContainerItem,
+  Lazyload,
+  InfiniteScroll
 } from 'mint-ui'
 // rem
 import computedRem from './rem'
@@ -34,3 +36,5 @@ Vue.component(TabContainerItem.name, TabContainerItem)
 Vue.component(Navbar.name, Navbar)
 Vue.component(TabItem.name, TabItem)
 Vue.component(Spinner.name, Spinner)
+Vue.use(Lazyload)
+Vue.use(InfiniteScroll)

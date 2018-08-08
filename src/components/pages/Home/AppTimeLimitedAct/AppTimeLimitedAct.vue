@@ -62,7 +62,8 @@ export default {
       observeParents: true,
       autoHeight: true,
       width: 243,
-      speed: 300
+      speed: 300,
+      watchOverflow: true
     })
   }
 }

@@ -10,7 +10,7 @@
     </div>
     <div class="swiper-container app-broad-cast">
       <div class="swiper-wrapper" >
-        <div class="swiper-slide" style="width: 243px; margin-right: 30px;" v-for="item in BroadCast" :key="item.goodsId">
+        <div class="swiper-slide" style="width: 243px; margin-right: 30px;" v-for="(item,idx) in BroadCast" :key="item.goodsId + 'i' + idx">
           <a class="external" :href="item.goodsSn | filtergoodsA()">
             <img src="/static/zb_list_img_03.png">
             <div class="sp_img">
@@ -34,13 +34,12 @@
   </div>
 </template>
 <script>
-
+import Vue from 'vue'
 import Swiper from 'swiper'
 import AppTitleTop from '../../../commons/AppTitleTop/AppTitleTop'
 
 export default {
   name: 'AppBroadCast',
-
   props: {
     BroadCasts: {
       type: Object,
@@ -52,17 +51,24 @@ export default {
   },
   computed: {
     BroadCast () {
-      return this.BroadCasts && this.BroadCasts.data ? JSON.parse(this.BroadCasts.data).countryList : []
+      if (this.BroadCasts && this.BroadCasts.data) {
+        return JSON.parse(this.BroadCasts.data).countryList || JSON.parse(this.BroadCasts.data).countryInfo.todayList
+      }
+      return []
     }
   },
-  mounted () {
-    // eslint-disable-next-line
-    new Swiper('.app-broad-cast', {
-      autoplay: false,
-      observeParents: true,
-      autoHeight: true,
-      width: 243,
-      speed: 300
+  created () {
+    Vue.nextTick(() => {
+      // eslint-disable-next-line
+      new Swiper('.app-broad-cast', {
+        autoplay: false,
+        observer: true,
+        observeParents: true,
+        autoHeight: true,
+        slidesPerView: 'auto',
+        speed: 300,
+        updateOnImagesReady: true
+      })
     })
   }
 }

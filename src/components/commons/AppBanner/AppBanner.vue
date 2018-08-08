@@ -11,6 +11,7 @@
   </div>
 </template>
 <script>
+import Vue from 'vue'
 import Swiper from 'swiper'
 export default {
   name: 'AppBanner',
@@ -20,20 +21,24 @@ export default {
       return this.BannerDatas && this.BannerDatas.data ? JSON.parse(this.BannerDatas.data) : 1
     }
   },
-  mounted () {
-    // if (this.BannerData) { console.log(111) }
-    let swiperid = '#' + this.swiperData.id
-    // eslint-disable-next-line
-    new Swiper(swiperid, {
-      pagination: {
-        el: '.swiper-pagination'
-      },
-      loop: this.swiperData.loop || true,
-      autoplay: this.swiperData.autoplay || {
-        delay: this.swiperData.delay || 3000,
-        disableOnInteraction: false
-      },
-      observeParents: true
+  created () {
+    Vue.nextTick(() => {
+      let swiperid = '#' + this.swiperData.id
+      // eslint-disable-next-line
+      new Swiper(swiperid, {
+        pagination: {
+          el: '.swiper-pagination'
+        },
+        loop: this.BannerData.length > 1 ? this.swiperData.loop || true : false,
+        autoplay: this.swiperData.autoplay || {
+          delay: this.swiperData.delay || 3000,
+          disableOnInteraction: false
+        },
+        observer: true,
+        observeParents: true,
+        watchOverflow: true,
+        updateOnImagesReady: true
+      })
     })
   }
 }

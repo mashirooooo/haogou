@@ -24,11 +24,9 @@ export default {
 <style lang="scss" scoped>
   #app-quick-enter {
     width: 100%;
-    height: 1.76rem;
     .quickEnter-container {
       display: flex;
       width: 100%;
-      height: 1.76rem;
       padding: 0.1rem 0rem;
       flex-wrap: wrap;
       a{
