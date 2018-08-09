@@ -8,15 +8,15 @@
     >
       <li v-for="item in hotGoodsList" :key="item.goodsId" class="hot_goods_li">
         <div class="re_img">
-          <a class="external" >
+          <router-link exact @click="hasMore = false" class="external" :to="{name: 'ProDetail', query: {goodsId: item.goodsId}, params: {goodsData: item}}">
             <img :src="item.imgUrl" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-          </a>
+          </router-link>
         </div>
-          <a>
-            <div class="re_title good_tit_name"><span>韩束魔力BB霜双星劲爆组</span>
+          <router-link @click="hasMore = false" exact class="external" :to="{name: 'ProDetail', query: {goodsId: item.goodsId}, params: {goodsData: item}}">
+            <div class="re_title good_tit_name"><span>{{item.goodsNm}}</span>
             </div>
-          </a>
-          <p class="re_price">￥199</p>
+          </router-link>
+          <p class="re_price">￥{{item.salePrc}}</p>
       </li>
     </ul>
     <p v-if="!hasMore" style="text-align: center;margin-top: .2rem">没有更多了...</p>

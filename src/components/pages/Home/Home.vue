@@ -1,5 +1,6 @@
 <template>
   <div class="page">
+    <app-top></app-top>
     <mt-navbar v-model="navId" fixed >
       <mt-tab-item id="110" @click.native="changeDataByNavId">首页</mt-tab-item>
       <mt-tab-item id="111" @click.native="changeDataByNavId">直播</mt-tab-item>
@@ -11,27 +12,25 @@
     <mt-spinner type="triple-bounce" v-if="!modulehome.Show" color= 'gray' :size='40'></mt-spinner>
     <mt-tab-container v-model="navId" v-else>
       <mt-tab-container-item id="110">
-        <div>
-          <!-- <app-top></app-top> -->
-          <app-banner :swiperData='Banner' :BannerDatas ="homeData.data110.BannerDatas"></app-banner>
-          <app-quick-enter :QuickEnter ='homeData.data110.QuickEnter'></app-quick-enter>
-          <app-banner :swiperData='adBanner' :BannerDatas ="homeData.data110.adBannerDatas"></app-banner>
+        <div style="padding-top:.3rem" v-if="homeData.data110">
+          <app-banner  :swiperData='Banner' :BannerDatas ="homeData.data110.BannerDatas"></app-banner>
+          <app-quick-enter :QuickEnter='homeData.data110.QuickEnter'></app-quick-enter>
           <app-broad-cast :BroadCasts='homeData.data110.BroadCasts' ></app-broad-cast>
           <app-big-discount :BigDiscounts='homeData.data110.BigDiscounts'></app-big-discount>
           <app-big-discount :BigDiscounts='homeData.data110.JumpDiscounts'></app-big-discount>
-          <app-hot-goods v-if="navId === '110'"></app-hot-goods>
+          <app-hot-goods v-if="navId === '110' && hasMore"></app-hot-goods>
         </div>
       </mt-tab-container-item>
 
       <mt-tab-container-item id="111">
-        <div v-if="homeData.data111">
-          <app-broad-cast :BroadCasts='homeData.data111.BrgBroadCaststwo' ></app-broad-cast>
-          <app-hot-goods v-if="navId === '111'" :hotSale="homeData.data111.hotSale || 1"></app-hot-goods>
+        <div v-if="homeData.data111" style="padding-top:.3rem">
+          <app-broad-cast :BroadCasts='homeData.data111.BrgBroadCaststwo'></app-broad-cast>
+          <app-hot-goods v-if="navId === '111' && hasMore" :hotSale="homeData.data111.hotSale || 1"></app-hot-goods>
         </div>
       </mt-tab-container-item>
 
       <mt-tab-container-item id="114">
-        <div v-if="homeData.data114">
+        <div v-if="homeData.data114" style="padding-top:.3rem">
           <app-banner :swiperData='Bannertwo' :BannerDatas ="homeData.data114.BannerDatas"></app-banner>
           <app-quick-enter :QuickEnter ='homeData.data114.QuickEnter'></app-quick-enter>
           <app-banner :swiperData='adBannertwo' :BannerDatas ="homeData.data114.adBannerDatas"></app-banner>
@@ -41,7 +40,7 @@
       </mt-tab-container-item>
 
       <mt-tab-container-item id="113">
-        <div v-if="homeData.data113">
+        <div v-if="homeData.data113" style="padding-top:.3rem">
           <app-banner :swiperData='Bannerthree' :BannerDatas ="homeData.data113.BannerDatas"></app-banner>
           <app-quick-enter :QuickEnter ='homeData.data113.QuickEnter'></app-quick-enter>
           <app-banner :swiperData='adBannerthree' :BannerDatas ="homeData.data113.adBannerDatas"></app-banner>
@@ -52,26 +51,28 @@
       </mt-tab-container-item>
 
       <mt-tab-container-item id="115">
-        <div v-if="homeData.data115">
-          <app-banner :swiperData='Bannerthree' :BannerDatas ="homeData.data115.BannerDatas"></app-banner>
+        <div v-if="homeData.data115" style="padding-top:.3rem">
+          <app-banner :swiperData='Bannerfour' :BannerDatas ="homeData.data115.BannerDatas"></app-banner>
           <app-quick-enter :QuickEnter ='homeData.data115.QuickEnter'></app-quick-enter>
-          <app-banner :swiperData='adBannerthree' :BannerDatas ="homeData.data115.adBannerDatas"></app-banner>
+          <app-banner :swiperData='adBannerfour' :BannerDatas ="homeData.data115.adBannerDatas"></app-banner>
           <app-big-discount  :BigDiscounts='homeData.data115.BigDiscounts'></app-big-discount>
           <app-big-discount :BigDiscounts='homeData.data115.JumpDiscounts'></app-big-discount>
           <p style="text-align: center; line-height: .24rem;height: .24rem"> 哎呀，没有更多了</p>
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
+    <app-footer></app-footer>
   </div>
 </template>
 <script>
 
-// import AppTop from './AppTop/AppTop'
 import AppBanner from '../../commons/AppBanner/AppBanner'
 import AppHotGoods from '../../commons/AppHotGoods/AppHotGoods'
+import AppFooter from '../../commons/AppFooter/AppFooter'
 // eslint-disable-next-line
 import {mapActions, mapState,mapGetters, mapMutations} from 'vuex'
 
+import AppTop from './AppTop/AppTop'
 import AppQuickEnter from './AppQuickEnter/AppQuickEnter'
 import AppBroadCast from './AppBroadCast/AppBroadCast'
 import AppBigDiscount from './AppBigDiscount/AppBigDiscount'
@@ -80,7 +81,9 @@ export default {
   name: 'Home',
   data () {
     return {
+      hasMore: true,
       navId: '110',
+      thisvalue: '',
       navIds: [],
       Banner: {
         id: 'Banner',
@@ -107,18 +110,28 @@ export default {
       adBannerthree: {
         id: 'adBannerthree',
         height: '1rem',
-        delay: 1000
+        delay: 1300
+      },
+      Bannerfour: {
+        id: 'Bannerfour',
+        height: '1.43rem'
+      },
+      adBannerfour: {
+        id: 'adBannerfour',
+        height: '1rem',
+        delay: 1500
       },
       homeData: {}
     }
   },
   components: {
-    // AppTop,
+    AppTop,
     AppBanner,
     AppQuickEnter,
     AppBroadCast,
     AppBigDiscount,
-    AppHotGoods
+    AppHotGoods,
+    AppFooter
   },
   methods: {
     ...mapActions(['getChangeHomeData']),
@@ -128,7 +141,17 @@ export default {
       this.getChangeHomeData({navId: this.navId})
     }
   },
+  beforeRouteLeave (to, from, next) {
+    this.hasMore = false
+    next()
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.hasMore = true
+    })
+  },
   created () {
+    if (sessionStorage.getItem('navId')) { this.navId = sessionStorage.getItem('navId') }
     this.navIds.push(this.navId)
     this.getChangeHomeData({navId: this.navId})
   },
@@ -192,9 +215,13 @@ export default {
       display: block;
       width: 100%;
       text-align: center;
-      padding-top: .7rem;
+      padding-top: 1rem;
+    }
+    .mint-header.is-fixed{
+      z-index: 1000;
     }
     .mint-navbar.is-fixed {
+      top: .40rem;
       z-index: 1000;
     }
     .mint-tab-container{

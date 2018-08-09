@@ -2,7 +2,7 @@
   <div :id='swiperData.id' class="swiper-container" >
     <div class="swiper-wrapper swipe-wrap">
       <div class="swiper-slide" v-for="item in BannerData" :key="item.linkId" :style="{'height': swiperData.height}">
-        <a :href="item.linkId | filterA" >
+        <a>
           <img :style="{'height': swiperData.height}" :src="item.imgUrl">
         </a>
       </div>
@@ -37,7 +37,8 @@ export default {
         observer: true,
         observeParents: true,
         watchOverflow: true,
-        updateOnImagesReady: true
+        updateOnImagesReady: true,
+        autoheight: true
       })
     })
   }

@@ -12,6 +12,7 @@ const actions = {
         val: res,
         navId: payload.navId
       })
+      sessionStorage.setItem('navId', payload.navId)
       context.commit({
         type: CHANGE_SHOW,
         Show: true

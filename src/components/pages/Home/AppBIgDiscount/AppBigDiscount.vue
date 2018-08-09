@@ -13,9 +13,9 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide" style="width: 112.333px; margin-right: 10px;" v-for=" (item, index) in BigDiscount" :key="item.goodsId +'i'+index" >
             <div>
-                <a :href="item.goodsId | filtergoodsA " class="external pre postions">
+                <router-link exact :to="{name: 'ProDetail', query: {goodsId: item.goodsId}, params: {goodsData: item}}" class="external pre postions">
                   <img class="lazy" :src="item.imgUrl" :data-original="item.imgUrl" style="transform-origin: 0px 0px 0px; opacity: 1; transform: scale(1, 1);">
-                </a>
+                </router-link>
                 <p class="pt_title_new height_pt" v-if="show">{{item.goodsUsp}}</p>
                 <p class="pt_title_new height_pt" v-else>{{item.goodsNm}}</p>
                 <p class="pt_price_new" v-if="show">拼团价:￥<span>{{item.salePrc}}</span></p>

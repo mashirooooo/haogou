@@ -11,7 +11,7 @@
     <div class="swiper-container app-broad-cast">
       <div class="swiper-wrapper" >
         <div class="swiper-slide" style="width: 243px; margin-right: 30px;" v-for="(item,idx) in BroadCast" :key="item.goodsId + 'i' + idx">
-          <a class="external" :href="item.goodsSn | filtergoodsA()">
+          <router-link exact class="external" :to="{name: 'ProDetail', query: {goodsId: item.goodsId}, params: {goodsData: item}}">
             <img src="/static/zb_list_img_03.png">
             <div class="sp_img">
               <img :src="item.imgUrl" :alt="item.goodsNm">
@@ -27,7 +27,7 @@
               </p>
               <span class="zhan"> <span>{{item.saleQty}}</span><img src="/static/img/love_zhan.png"> </span>
             </div>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
