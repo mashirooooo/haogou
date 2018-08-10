@@ -8,16 +8,16 @@
     <div class="detailImg">
       <img v-if="goodsDatas" :src="goodsDatas.imgUrl">
     </div>
-
+    <p style="margin: .1rem; font-size: .18rem; font-weight: 700">{{goodsDatas.goodsNm}}</p>
     <div class="det_info">
       <div class="price_info">
         <div class="det_price">
-          <font>好享价:</font>￥48
-          <s>￥88</s>
+          <font>好享价:</font>￥{{goodsDatas.haoPrc}}
+          <s>￥{{goodsDatas.marketPrc}}</s>
         </div>
       </div>
       <div class="det_num_time">
-        <div class="det_price_num">商品编号 D1009812</div>
+        <div class="det_price_num">商品编号H {{goodsDatas.goodsId}}</div>
       </div>
     </div>
 
@@ -99,35 +99,45 @@ export default {
       this.buyNum++
     },
     addBuyCar () {
-      let buycar = JSON.parse(this.$cookies.get('haoxiangBuycar')) || []
-      let thisbuycarnum = 0
-      if (buycar !== [] && buycar.length > 0) {
-        for (let i = 0; i < buycar.length; i++) {
-          if (buycar[i].goodsId === this.goodsId) {
-            thisbuycarnum = buycar[i].buyNum ? buycar[i].buyNum : 0
-          }
-          this.goodsDatas.buyNum = thisbuycarnum + this.buyNum
-          buycar.splice(i, 1, this.goodsDatas)
-          break
-        }
-        if (!this.goodsDatas.buyNum) {
-          this.goodsDatas.buyNum = this.buyNum
-          buycar.push(this.goodsDatas)
-        }
-        this.$cookies.set('haoxiangBuycar', JSON.stringify(buycar), { expires: 365 })
-      } else {
-        this.goodsDatas.buyNum = this.buyNum
-        buycar.push(this.goodsDatas)
-        this.$cookies.set('haoxiangBuycar', JSON.stringify(buycar), { expires: 365 })
-      }
       MessageBox({
-        title: '添加成功',
-        message: '是否前往购物车',
+        title: '提示',
+        message: '是否添加购物车',
         showCancelButton: true,
         confirmButtonHighlight: true,
         confirmButtonClass: 'Aconfirm'
       }).then(action => {
-        if (action === 'confirm') this.$router.push({name: 'buyCar'})
+        if (action === 'confirm') {
+          let buycar = JSON.parse(this.$cookies.get('haoxiangBuycar')) || []
+          let thisbuycarnum = 0
+          if (buycar !== [] && buycar.length > 0) {
+            for (let i = 0; i < buycar.length; i++) {
+              if (buycar[i].goodsId === this.goodsId) {
+                thisbuycarnum = buycar[i].buyNum ? buycar[i].buyNum : 0
+                this.goodsDatas.buyNum = thisbuycarnum + this.buyNum
+                buycar.splice(i, 1, this.goodsDatas)
+                break
+              }
+            }
+            if (!this.goodsDatas.buyNum) {
+              this.goodsDatas.buyNum = this.buyNum
+            }
+            buycar.push(this.goodsDatas)
+            this.$cookies.set('haoxiangBuycar', JSON.stringify(buycar), { expires: 365 })
+          } else {
+            this.goodsDatas.buyNum = this.buyNum
+            buycar.push(this.goodsDatas)
+            this.$cookies.set('haoxiangBuycar', JSON.stringify(buycar), { expires: 365 })
+          }
+          MessageBox({
+            title: '添加成功',
+            message: '是否前往购物车',
+            showCancelButton: true,
+            confirmButtonHighlight: true,
+            confirmButtonClass: 'Aconfirm'
+          }).then(action => {
+            if (action === 'confirm') this.$router.push({name: 'buycar'})
+          })
+        }
       })
     }
   }
@@ -135,13 +145,14 @@ export default {
 </script>
 <style lang="scss">
 .Aconfirm{
-  color: red;
   font-size: .15rem;
+  background: red;
+  color: #d5d5d5;
 }
 #prodetail{
   height: 100%;
   header{
-    background: #fff;
+    background: #e3e3e3;
     color: #000;
     .mint-button{
       height: .5rem;
