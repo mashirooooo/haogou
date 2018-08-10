@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import Axios from 'axios'
 import './filter'
+import VueCookies from 'vue-cookies'
+
 // swiper css
 import 'swiper/dist/css/swiper.min.css'
 
@@ -45,3 +47,5 @@ Vue.component(Button.name, Button)
 
 Vue.use(Lazyload)
 Vue.use(InfiniteScroll)
+
+Vue.use(VueCookies)
