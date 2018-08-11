@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import Home from '../components/pages/Home/Home'
 import ProDetail from '../components/pages/ProDetail/ProDetail'
 import BuyCar from '../components/pages/BuyCar/BuyCar'
+import Login from '../components/pages/Login/Login'
+import Register from '../components/pages/Register/Register'
+
 Vue.use(Router)
 
 export default new Router({
@@ -23,6 +26,16 @@ export default new Router({
       path: '/buycar',
       name: 'buycar',
       component: BuyCar
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     },
     {
       path: '**',

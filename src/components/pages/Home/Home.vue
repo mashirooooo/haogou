@@ -69,10 +69,10 @@
 import AppBanner from '../../commons/AppBanner/AppBanner'
 import AppHotGoods from '../../commons/AppHotGoods/AppHotGoods'
 import AppFooter from '../../commons/AppFooter/AppFooter'
+import AppTop from '../../commons/AppTop/AppTop'
 // eslint-disable-next-line
 import {mapActions, mapState,mapGetters, mapMutations} from 'vuex'
 
-import AppTop from './AppTop/AppTop'
 import AppQuickEnter from './AppQuickEnter/AppQuickEnter'
 import AppBroadCast from './AppBroadCast/AppBroadCast'
 import AppBigDiscount from './AppBigDiscount/AppBigDiscount'

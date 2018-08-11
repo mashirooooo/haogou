@@ -1,5 +1,5 @@
 <template>
-  <div id="buycar">
+  <div id="buycar" v-if="$store.state.modulecommon.IsLogin">
     <mt-header title="购物车" style="margin: 0 0 .2rem 0">
       <mt-button icon="back" @click="$router.go(-1)" slot="left">返回</mt-button>
       <mt-button icon="more" slot="right"></mt-button>
@@ -78,13 +78,30 @@ export default {
         title: '提示',
         message: '是否删除此商品',
         showCancelButton: true,
-        confirmButtonHighlight: true
+        confirmButtonHighlight: true,
+        cancelButtonClass: 'Aconfirm'
       }).then(action => {
         if (action === 'confirm') {
           this.rechangeCookie(item, remove)
         }
       })
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      if (!vm.$store.state.modulecommon.IsLogin) {
+        MessageBox({
+          title: '提示',
+          message: '你还没登陆,前往登陆',
+          confirmButtonHighlight: true,
+          confirmButtonClass: 'Aconfirm'
+        }).then(action => {
+          if (action === 'confirm') {
+            vm.$router.push({name: 'login'})
+          }
+        })
+      }
+    })
   }
 }
 </script>

@@ -23,7 +23,8 @@ import {
   InfiniteScroll,
   Header,
   Search,
-  Button
+  Button,
+  Switch
 } from 'mint-ui'
 // rem
 import computedRem from './rem'
@@ -44,6 +45,7 @@ Vue.component(Spinner.name, Spinner)
 Vue.component(Header.name, Header)
 Vue.component(Search.name, Search)
 Vue.component(Button.name, Button)
+Vue.component(Switch.name, Switch)
 
 Vue.use(Lazyload)
 Vue.use(InfiniteScroll)

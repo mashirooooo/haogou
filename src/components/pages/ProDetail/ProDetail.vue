@@ -59,29 +59,34 @@ export default {
   props: ['goodsData', 'goodsId'],
   created () {
     if (!this.goodsId) this.$router.push({name: 'Home'})
-    if (this.haoxiangData) {
-      let thishaoxiangData = JSON.parse(this.haoxiangData)
-      for (let i = 0; i < thishaoxiangData.length; i++) {
-        if (thishaoxiangData[i].goodsId === this.goodsId) {
-          this.goodsDatas = thishaoxiangData[i]
-          break
+    let home = []
+    if (this.goodsData) {
+      if (this.haoxiangData) {
+        let home = JSON.parse(this.haoxiangData)
+        for (let i = 0; i < home.length; i++) {
+          if (home[i].goodsId === this.goodsId) {
+            this.goodsDatas = home[i]
+            home.splice(i, 1)
+            break
+          }
         }
       }
-      if (!this.goodsDatas) {
-        if (!this.goodsData) this.$router.push({name: 'Home'})
-        this.goodsDatas = this.goodsData
-        let homes = JSON.parse(localStorage.getItem('haoxiang'))
-        homes.push(this.goodsDatas)
-        localStorage.setItem('haoxiang', JSON.stringify(homes))
-      }
-      if (!this.goodsDatas) this.$router.push({name: 'Home'})
+      if (!this.goodsDatas) this.goodsDatas = this.goodsData
+      home.push(this.goodsDatas)
+      localStorage.setItem('haoxiang', JSON.stringify(home))
     } else {
-      if (!this.goodsData) this.$router.push({name: 'Home'})
-      this.goodsDatas = this.goodsData
-      let homes = []
-      homes.push(this.goodsDatas)
-      localStorage.setItem('haoxiang', JSON.stringify(homes))
+      let home = []
+      if (this.haoxiangData) {
+        home = JSON.parse(this.haoxiangData)
+        for (let i = 0; i < home.length; i++) {
+          if (home[i].goodsId === this.goodsId) {
+            this.goodsDatas = home[i]
+            break
+          }
+        }
+      }
     }
+    if (!this.goodsDatas) this.$router.push({name: 'Home'})
   },
   watch: {
     buyNum (val) {
@@ -99,56 +104,67 @@ export default {
       this.buyNum++
     },
     addBuyCar () {
-      MessageBox({
-        title: '提示',
-        message: '是否添加购物车',
-        showCancelButton: true,
-        confirmButtonHighlight: true,
-        confirmButtonClass: 'Aconfirm'
-      }).then(action => {
-        if (action === 'confirm') {
-          let buycar = JSON.parse(this.$cookies.get('haoxiangBuycar')) || []
-          let thisbuycarnum = 0
-          if (buycar !== [] && buycar.length > 0) {
-            for (let i = 0; i < buycar.length; i++) {
-              if (buycar[i].goodsId === this.goodsId) {
-                thisbuycarnum = buycar[i].buyNum ? buycar[i].buyNum : 0
-                this.goodsDatas.buyNum = thisbuycarnum + this.buyNum
-                buycar.splice(i, 1, this.goodsDatas)
-                break
-              }
-            }
-            if (!this.goodsDatas.buyNum) {
-              this.goodsDatas.buyNum = this.buyNum
-            }
-            buycar.push(this.goodsDatas)
-            this.$cookies.set('haoxiangBuycar', JSON.stringify(buycar), { expires: 365 })
+      if (!this.$store.state.modulecommon.IsLogin) {
+        MessageBox({
+          title: '提示',
+          message: '你还没登陆,前往登陆',
+          showCancelButton: true,
+          confirmButtonHighlight: true,
+          confirmButtonClass: 'Aconfirm'
+        }).then(action => {
+          if (action === 'confirm') {
+            this.$router.push({name: 'login'})
           } else {
-            this.goodsDatas.buyNum = this.buyNum
-            buycar.push(this.goodsDatas)
-            this.$cookies.set('haoxiangBuycar', JSON.stringify(buycar), { expires: 365 })
+            return false
           }
-          MessageBox({
-            title: '添加成功',
-            message: '是否前往购物车',
-            showCancelButton: true,
-            confirmButtonHighlight: true,
-            confirmButtonClass: 'Aconfirm'
-          }).then(action => {
-            if (action === 'confirm') this.$router.push({name: 'buycar'})
-          })
-        }
-      })
+        })
+      } else {
+        MessageBox({
+          title: '提示',
+          message: '是否添加购物车',
+          showCancelButton: true,
+          confirmButtonHighlight: true,
+          confirmButtonClass: 'Aconfirm'
+        }).then(action => {
+          if (action === 'confirm') {
+            let buycar = JSON.parse(this.$cookies.get('haoxiangBuycar')) || []
+            let thisbuycarnum = 0
+            if (buycar !== [] && buycar.length > 0) {
+              for (let i = 0; i < buycar.length; i++) {
+                if (buycar[i].goodsId === this.goodsId) {
+                  thisbuycarnum = buycar[i].buyNum ? buycar[i].buyNum : 0
+                  this.goodsDatas.buyNum = thisbuycarnum + this.buyNum
+                  buycar.splice(i, 1, this.goodsDatas)
+                  break
+                }
+              }
+              if (!this.goodsDatas.buyNum) {
+                this.goodsDatas.buyNum = this.buyNum
+              }
+              buycar.push(this.goodsDatas)
+              this.$cookies.set('haoxiangBuycar', JSON.stringify(buycar), { expires: 365 })
+            } else {
+              this.goodsDatas.buyNum = this.buyNum
+              buycar.push(this.goodsDatas)
+              this.$cookies.set('haoxiangBuycar', JSON.stringify(buycar), { expires: 365 })
+            }
+            MessageBox({
+              title: '添加成功',
+              message: '是否前往购物车',
+              showCancelButton: true,
+              confirmButtonHighlight: true,
+              confirmButtonClass: 'Aconfirm'
+            }).then(action => {
+              if (action === 'confirm') this.$router.push({name: 'buycar'})
+            })
+          }
+        })
+      }
     }
   }
 }
 </script>
 <style lang="scss">
-.Aconfirm{
-  font-size: .15rem;
-  background: red;
-  color: #d5d5d5;
-}
 #prodetail{
   height: 100%;
   header{
