@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <app-top></app-top>
+    <app-top @click.native="$router.push({name: 'search'})"></app-top>
     <mt-navbar v-model="navId" fixed >
       <mt-tab-item id="110" @click.native="changeDataByNavId">首页</mt-tab-item>
       <mt-tab-item id="111" @click.native="changeDataByNavId">直播</mt-tab-item>
@@ -15,6 +15,7 @@
         <div style="padding-top:.3rem" v-if="homeData.data110">
           <app-banner  :swiperData='Banner' :BannerDatas ="homeData.data110.BannerDatas"></app-banner>
           <app-quick-enter :QuickEnter='homeData.data110.QuickEnter'></app-quick-enter>
+          <app-banner  :swiperData='adBanner' :BannerDatas ="homeData.data110.adBannerDatas"></app-banner>
           <app-broad-cast :BroadCasts='homeData.data110.BroadCasts' ></app-broad-cast>
           <app-big-discount :BigDiscounts='homeData.data110.BigDiscounts'></app-big-discount>
           <app-big-discount :BigDiscounts='homeData.data110.JumpDiscounts'></app-big-discount>
@@ -62,6 +63,12 @@
       </mt-tab-container-item>
     </mt-tab-container>
     <app-footer></app-footer>
+
+    <div class="nav">
+      <span @click="$router.push({name: 'buycar'})">
+        <img src="../../../assets/buyCar.png">
+      </span>
+    </div>
   </div>
 </template>
 <script>
@@ -208,6 +215,24 @@ export default {
 </script>
 <style lang="scss">
   .page{
+    .nav{
+      position: fixed;
+      bottom: .9rem;
+      left: .4rem;
+      span{
+        border: 1px solid red;
+        border-radius: 50%;
+        display: inline-block;
+        padding: .08rem;
+        background: #fff;
+        img{
+          width: .3rem;
+          height: .3rem;
+          display: inline-block;
+          background: #fff;
+        }
+      }
+    }
     background: #f3f5f7;
     height: 100%;
     font-size: 0.15rem;

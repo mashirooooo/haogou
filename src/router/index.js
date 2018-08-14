@@ -4,6 +4,7 @@ import Home from '../components/pages/Home/Home'
 import ProDetail from '../components/pages/ProDetail/ProDetail'
 import BuyCar from '../components/pages/BuyCar/BuyCar'
 import Login from '../components/pages/Login/Login'
+import AppSearch from '../components/pages/AppSearch/AppSearch'
 import Register from '../components/pages/Register/Register'
 
 Vue.use(Router)
@@ -26,6 +27,11 @@ export default new Router({
       path: '/buycar',
       name: 'buycar',
       component: BuyCar
+    },
+    {
+      path: 'search',
+      name: 'search',
+      component: AppSearch
     },
     {
       path: '/login',

@@ -134,7 +134,8 @@ export default {
                 if (buycar[i].goodsId === this.goodsId) {
                   thisbuycarnum = buycar[i].buyNum ? buycar[i].buyNum : 0
                   this.goodsDatas.buyNum = thisbuycarnum + this.buyNum
-                  buycar.splice(i, 1, this.goodsDatas)
+                  buycar.splice(i, 1)
+                  console.log(111)
                   break
                 }
               }
