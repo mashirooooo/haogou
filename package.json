@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "express": "^4.16.3",
     "mint-ui": "^2.2.13",
     "node-sass": "^4.9.2",
     "sass-loader": "^7.0.3",
